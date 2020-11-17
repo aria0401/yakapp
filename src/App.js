@@ -1,12 +1,20 @@
 import React, {useState, useEffect} from "react";
 
-import {get} from "./modules/rest";
+import {get, post} from "./modules/rest";
 import Main from "./components/Main";
 import './App.css';
 
 function App() {
   const [cards, setCards] = useState([]);
+  function cardAdded(task){
   
+    const payload = {
+      task,
+      highlight:false,
+      list:"todo"
+    }
+    post(payload, cards, setCards);
+  }
   useEffect(()=>{
     get(setCards)
   }, []);
@@ -14,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <Nav />
-      <Main cards={cards}/>
+      <Main cardAdded={cardAdded} cards={cards}/>
     </div>
   );
 }

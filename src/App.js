@@ -1,50 +1,31 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {get} from "./modules/rest"
 import Main from "./components/Main";
 import './App.css';
 
+
 function App() {
-  const [cards, setCards] = useState([
-    {
-      task:"Clean room",
-      list:"todo",
-      highlight:true
-    },
-    {
-      task:"Clean kitchen",
-      list:"doing",
-      highlight:false
-    },
-    {
-      task:"Do JS",
-      list:"done",
-      highlight:true
-    },
-    {
-      task:"Learn React",
-      list:"doing",
-      highlight:false
-    }
-  ]);
-  
-  const day = "monday".split("").join(" ");
-  const message = "Hi Mom";
-  const addCard = () => {
-    setCards(cards.concat({
-      task:"Learn React " + Math.random(),
-      list:["todo", "doing", "done"][Math.floor(Math.random()*3)],
-      highlight:false
-    }))
+  const [cards, setCards] = useState([]);
+
+  function cardAdded(e){
+console.log(e);
   }
+
+  useEffect(()=>{
+  get(setCards);
+
+
+  }, []);
+
+
   return (
-    <>
-    <h1>Hello {`my friend it's ${day}`}</h1>
-    <button onClick={addCard}>Add Card</button>
+   
     <div className="App">
       <Nav />
       
-      <Main cards={cards} message={message}/>
+      <Main cardAdded={cardAdded} cards={cards}/>
     </div>
-    </>
+ 
   );
 }
 

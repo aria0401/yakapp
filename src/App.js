@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {get} from "./modules/rest"
+import {get, post} from "./modules/rest";
 import Main from "./components/Main";
 import './App.css';
 
@@ -7,25 +7,25 @@ import './App.css';
 function App() {
   const [cards, setCards] = useState([]);
 
-  function cardAdded(e){
-console.log(e);
+  function cardAdded(task){
+  
+    const payload = {
+      task,
+      highlight:false,
+      list:"todo"
+    }
+    post(payload, cards, setCards);
   }
-
   useEffect(()=>{
-  get(setCards);
-
-
+    get(setCards)
   }, []);
 
-
   return (
-   
     <div className="App">
       <Nav />
-      
       <Main cardAdded={cardAdded} cards={cards}/>
     </div>
- 
+
   );
 }
 
